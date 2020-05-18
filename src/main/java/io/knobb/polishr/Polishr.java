@@ -1,21 +1,23 @@
 package io.knobb.polishr;
 
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 import java.util.concurrent.atomic.AtomicReference;
 
 public class Polishr extends Application {
 
+    StackPane layout;
     Circle circle;
     Label label;
+    Rectangle notch;
+    StackPane knobGroup;
     boolean init = false;
 
     AtomicReference<Double> value = new AtomicReference<>(0D);
@@ -28,30 +30,38 @@ public class Polishr extends Application {
     @Override
     public void start(Stage window) {
         window.setTitle("Polishr By Knobb");
-
-        StackPane layout = new StackPane();
+        knobGroup = new StackPane();
+        // Graphic knob
         circle = new Circle();
         circle.setCenterX(0);
         circle.setCenterY(0);
         circle.setRadius(80);
         circle.setId("knob-control");
-
+        // Graphic knob notch
+        notch = new Rectangle();
+        notch.setHeight(20);
+        notch.setWidth(5);
+        notch.setTranslateY(-70);
+        notch.setId("knob-control-notch");
+        // Graphic knob group object
+        knobGroup.getChildren().addAll(circle, notch);
+        knobGroup.setRotate(0);
+        // Value Label
         label = new Label();
-        label.setText("0");
+        label.setText(String.valueOf(value.get()));
+        label.setId("value-label");
 
-        circle.addEventFilter(MouseEvent.MOUSE_ENTERED, (e) -> {
-            circle.setFill(Color.valueOf("#666666"));
-        });
-        circle.addEventFilter(MouseEvent.MOUSE_EXITED, (e) -> {
-            circle.setFill(Color.valueOf("#999999"));
-        });
+        // User event handlers
         circle.addEventFilter(MouseEvent.MOUSE_PRESSED, (e) -> {
             updatePosition(e);
         });
         circle.addEventFilter(MouseEvent.MOUSE_DRAGGED, (e) -> {
             updatePosition(e);
         });
-        layout.getChildren().addAll(circle, label);
+
+        // Scene layout
+        layout = new StackPane();
+        layout.getChildren().addAll(knobGroup, label);
         Scene scene = new Scene(layout, 300, 400);
         scene.getStylesheets().add("file:style.css");
         window.setScene(scene);
@@ -62,7 +72,7 @@ public class Polishr extends Application {
     }
 
     private void updatePosition(MouseEvent e) {
-        double current = e.getY();
+        double current = e.getSceneY();
         double prev = previousY.get();
         double val = value.get();
         if (!init) {
@@ -73,7 +83,16 @@ public class Polishr extends Application {
         double newValue = (val + (-difference));
         value.set(newValue);
         val = value.get();
-        label.setText(String.valueOf((int)val));
         previousY.set(current);
+        if (val > 360) {
+            value.set(360D);
+            return;
+        }
+        if (val < 0) {
+            value.set(0D);
+            return;
+        }
+        knobGroup.setRotate(val);
+        label.setText(String.valueOf((int)val));
     }
 }

@@ -4,3 +4,12 @@
 #knob-control {
     -fx-fill: #999999;
 }
+#knob-control-notch {
+    -fx-fill: #666666;
+}
+#value-label {
+    -fx-text-fill: #cccccc;
+    -fx-font-size: 50px;
+    -fx-font-weight: lighter;
+    -fx-text-alignment: center;
+}
