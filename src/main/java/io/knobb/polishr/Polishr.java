@@ -18,6 +18,9 @@ public class Polishr extends Application {
     Label label;
     boolean init = false;
 
+    AtomicReference<Double> value = new AtomicReference<>(0D);
+    AtomicReference<Double> previousY = new AtomicReference<>(0D);
+
     public static void main(String[] args) {
         launch(args);
     }
@@ -42,7 +45,7 @@ public class Polishr extends Application {
         circle.addEventFilter(MouseEvent.MOUSE_EXITED, (e) -> {
             circle.setFill(Color.valueOf("#999999"));
         });
-        circle.addEventFilter(MouseEvent.MOUSE_CLICKED, (e) -> {
+        circle.addEventFilter(MouseEvent.MOUSE_PRESSED, (e) -> {
             updatePosition(e);
         });
         circle.addEventFilter(MouseEvent.MOUSE_DRAGGED, (e) -> {
@@ -59,21 +62,18 @@ public class Polishr extends Application {
     }
 
     private void updatePosition(MouseEvent e) {
-        AtomicReference<Boolean> enabled = new AtomicReference<>(false);
-        AtomicReference<Integer> value = new AtomicReference<>(0);
-        AtomicReference<Double> previousY = new AtomicReference<>(0D);
         double current = e.getY();
         double prev = previousY.get();
-        int val = value.get();
+        double val = value.get();
         if (!init) {
             previousY.set(current);
             init = true;
         }
         double difference = current - prev;
         double newValue = (val + (-difference));
-        value.set((int) newValue);
+        value.set(newValue);
         val = value.get();
-        label.setText(String.valueOf(val));
+        label.setText(String.valueOf((int)val));
         previousY.set(current);
     }
 }
