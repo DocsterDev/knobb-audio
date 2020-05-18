@@ -1,3 +1,6 @@
 .root {
     -fx-background-color: #333333;
 }
+#knob-control {
+    -fx-fill: #999999;
+}
