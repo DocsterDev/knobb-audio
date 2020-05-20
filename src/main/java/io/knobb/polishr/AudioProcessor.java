@@ -28,18 +28,17 @@ public class AudioProcessor extends Application {
     }
 
     private XYChart.Series createSineWave() {
-        double[][] data = new double[64][2];
-        int max = 360;
-        double radian = 0;
+        double[][] data = new double[512][2];
+        double radian;
+        double frequencyFactor = 20;
+        double amplitudeFactor = 0.5;
         XYChart.Series series = new XYChart.Series();
         series.setName("Sine Wave");
         for (int i=0;i<data.length;i++) {
             data[i][0] = i;
-//            if(radian >= max) {
-//                radian = 0;
-//            }
-            data[i][1] = Math.sin(radian);
-            System.out.println("Index: " + (int)data[i][0] + " Value: " + data[i][1]);
+            // radian = (2*i) / (2*Math.PI);
+            radian = Math.toRadians(frequencyFactor*i);
+            data[i][1] = (amplitudeFactor*(Math.sin(radian)));
             radian++;
             series.getData().add(new XYChart.Data((int)data[i][0], data[i][1]));
         }
