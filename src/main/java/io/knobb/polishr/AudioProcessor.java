@@ -8,13 +8,10 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.apache.commons.math3.complex.Complex;
+import org.apache.commons.math3.ode.nonstiff.AdamsIntegrator;
 import org.apache.commons.math3.transform.DftNormalization;
 import org.apache.commons.math3.transform.FastFourierTransformer;
 import org.apache.commons.math3.transform.TransformType;
-import org.apache.commons.math3.transform.TransformUtils;
-
-import java.util.Arrays;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class AudioProcessor extends Application {
 
@@ -40,7 +37,7 @@ public class AudioProcessor extends Application {
 
         double[] waveData = generateWaveData(1024);
 
-        timeData.getData().add(createSineWave(waveData));
+        timeData.getData().add(convertToLineData(waveData));
         fftData.getData().add(createFFTSpectrum(waveData));
 
         Scene scene = new Scene(layout, 900, 600);
@@ -64,7 +61,7 @@ public class AudioProcessor extends Application {
         return data;
     }
 
-    private XYChart.Series createSineWave(double[] data) {
+    private XYChart.Series convertToLineData(double[] data) {
         XYChart.Series series = new XYChart.Series();
         for (int i=0;i<data.length;i++) {
             series.getData().add(new XYChart.Data( i, data[i]));
@@ -73,20 +70,29 @@ public class AudioProcessor extends Application {
     }
 
     private XYChart.Series createFFTSpectrum(double[] data) {
-//      Complex[] dataVector = TransformUtils.createComplexArray(data);
         FastFourierTransformer transformer = new FastFourierTransformer(DftNormalization.STANDARD);
         Complex[] frequencyData = transformer.transform(data, TransformType.FORWARD);
+        double[] fftData = buildFFTPlot(frequencyData);
+        return convertToLineData(fftData);
+    }
 
-//      double[][] outputData = TransformUtils.createRealImaginaryArray(frequencyData);
+    private double[] buildFFTPlot(Complex[] fftData) {
+        double[] fftOut = new double[fftData.length];
+        double angle;
+        double scale = 2;
+        double real;
+        double imaginary;
 
-        double[] outputData = new double[data.length];
-        AtomicReference<Integer> count = new AtomicReference<>(0);
-        Arrays.stream(frequencyData).forEach((node) -> {
-            int index = count.get();
-            System.out.println("Index:" + index + " Real:" + node.getReal());
-            outputData[index] = node.getReal();
-            count.set(index + 1);
-        });
-        return createSineWave(outputData);
+        for (int i=0;i<fftData.length;i++) {
+            real = fftData[i].getReal();
+            imaginary = fftData[i].getImaginary();
+            angle = ( 2.0 * Math.PI * i / fftData.length );
+            fftOut[i] += real * Math.cos( angle ) / scale;
+            System.out.println( fftOut[i]);
+        }
+
+        AdamsIntegrator integrator = new AdamsIntegrator();
+
+        return fftOut;
     }
 }
