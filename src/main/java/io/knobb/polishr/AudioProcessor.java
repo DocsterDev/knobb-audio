@@ -49,7 +49,7 @@ public class AudioProcessor extends Application {
     private double[] generateWaveData(int fftSize) {
         double[] data = new double[fftSize];
         double radians;
-        double frequencyFactor = 1;
+        double frequencyFactor = 256;
         double amplitudeFactor = 1;
         for (int i=0;i<data.length;i++) {
             data[i] = i;
@@ -78,21 +78,11 @@ public class AudioProcessor extends Application {
 
     private double[] buildFFTPlot(Complex[] fftData) {
         double[] fftOut = new double[fftData.length];
-        double angle;
-        double scale = 2;
-        double real;
-        double imaginary;
-
+        double absolute;
         for (int i=0;i<fftData.length;i++) {
-            real = fftData[i].getReal();
-            imaginary = fftData[i].getImaginary();
-            angle = ( 2.0 * Math.PI * i / fftData.length );
-            fftOut[i] += real * Math.cos( angle ) / scale;
-            System.out.println( fftOut[i]);
+            absolute = fftData[i].abs();
+            fftOut[i] = absolute;
         }
-
-        AdamsIntegrator integrator = new AdamsIntegrator();
-
         return fftOut;
     }
 }
