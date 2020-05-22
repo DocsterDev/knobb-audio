@@ -13,3 +13,11 @@
     -fx-font-weight: lighter;
     -fx-text-alignment: center;
 }
+.chart-series-line {
+    -fx-stroke-width: 1px;
+}
+/*#line-chart .chart-series-line {*/
+/*    -fx-stroke-width: 1px;*/
+/*    -fx-fill-width: 1px;*/
+/*    -fx-fill: #333333;*/
+/*}*/

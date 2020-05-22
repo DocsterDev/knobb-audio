@@ -8,10 +8,11 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.apache.commons.math3.complex.Complex;
-import org.apache.commons.math3.ode.nonstiff.AdamsIntegrator;
+import org.apache.commons.math3.complex.ComplexUtils;
 import org.apache.commons.math3.transform.DftNormalization;
 import org.apache.commons.math3.transform.FastFourierTransformer;
 import org.apache.commons.math3.transform.TransformType;
+import org.apache.commons.math3.transform.TransformUtils;
 
 public class AudioProcessor extends Application {
 
@@ -28,6 +29,7 @@ public class AudioProcessor extends Application {
         timeData.setTitle("Time Data");
         timeData.setCreateSymbols(false);
         timeData.setLegendVisible(false);
+        timeData.setId("line-chart");
         fftData.setTitle("Fourier Transform");
         fftData.setCreateSymbols(false);
         fftData.setLegendVisible(false);
@@ -72,16 +74,26 @@ public class AudioProcessor extends Application {
     private XYChart.Series createFFTSpectrum(double[] data) {
         FastFourierTransformer transformer = new FastFourierTransformer(DftNormalization.STANDARD);
         Complex[] frequencyData = transformer.transform(data, TransformType.FORWARD);
-        double[] fftData = buildFFTPlot(frequencyData);
+
+        Complex eq1 = frequencyData[500];
+        Complex eq2 = frequencyData[501];
+        Complex eq3 = frequencyData[502];
+
+        frequencyData[500] = eq1.add(50);
+        frequencyData[501] = eq2.add(100);
+        frequencyData[502] = eq3.add(50);
+
+        Complex[] testInverse = transformer.transform(frequencyData, TransformType.INVERSE);
+        
+        double[] fftData = buildFFTPlot(testInverse);
+
         return convertToLineData(fftData);
     }
 
     private double[] buildFFTPlot(Complex[] fftData) {
         double[] fftOut = new double[fftData.length];
-        double absolute;
         for (int i=0;i<fftData.length;i++) {
-            absolute = fftData[i].abs();
-            fftOut[i] = absolute;
+            fftOut[i] = fftData[i].abs();
         }
         return fftOut;
     }
