@@ -12,9 +12,10 @@ import org.apache.commons.math3.complex.ComplexUtils;
 import org.apache.commons.math3.transform.DftNormalization;
 import org.apache.commons.math3.transform.FastFourierTransformer;
 import org.apache.commons.math3.transform.TransformType;
-import org.apache.commons.math3.transform.TransformUtils;
 
 public class AudioProcessor extends Application {
+
+    private static final FastFourierTransformer transformer = new FastFourierTransformer(DftNormalization.STANDARD);
 
     public static void main(String[] args) {
         launch(args);
@@ -23,8 +24,12 @@ public class AudioProcessor extends Application {
     @Override
     public void start(Stage window) {
         final VBox layout = new VBox();
-        final LineChart<Number,Number> timeData = new LineChart<>(new NumberAxis(), new NumberAxis());
-        final LineChart<Number,Number> fftData = new LineChart<>(new NumberAxis(), new NumberAxis());
+        NumberAxis xAxis1 = new NumberAxis();
+        NumberAxis xAxis2 = new NumberAxis();
+        xAxis1.setAutoRanging(true);
+        xAxis2.setAutoRanging(true);
+        final LineChart<Number,Number> timeData = new LineChart<>(xAxis1, new NumberAxis());
+        final LineChart<Number,Number> fftData = new LineChart<>(xAxis2, new NumberAxis());
 
         timeData.setTitle("Time Data");
         timeData.setCreateSymbols(false);
@@ -43,6 +48,7 @@ public class AudioProcessor extends Application {
         fftData.getData().add(createFFTSpectrum(waveData));
 
         Scene scene = new Scene(layout, 900, 600);
+        scene.getStylesheets().add("file:fftStyle.css");
         window.setScene(scene);
         window.setTitle("Fast Fourier Transform");
         window.show();
@@ -51,7 +57,7 @@ public class AudioProcessor extends Application {
     private double[] generateWaveData(int fftSize) {
         double[] data = new double[fftSize];
         double radians;
-        double frequencyFactor = 256;
+        double frequencyFactor = 16;
         double amplitudeFactor = 1;
         for (int i=0;i<data.length;i++) {
             data[i] = i;
@@ -72,7 +78,6 @@ public class AudioProcessor extends Application {
     }
 
     private XYChart.Series createFFTSpectrum(double[] data) {
-        FastFourierTransformer transformer = new FastFourierTransformer(DftNormalization.STANDARD);
         Complex[] frequencyData = transformer.transform(data, TransformType.FORWARD);
 
         Complex eq1 = frequencyData[500];
@@ -84,7 +89,7 @@ public class AudioProcessor extends Application {
         frequencyData[502] = eq3.add(50);
 
         Complex[] testInverse = transformer.transform(frequencyData, TransformType.INVERSE);
-        
+
         double[] fftData = buildFFTPlot(testInverse);
 
         return convertToLineData(fftData);

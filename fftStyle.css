@@ -1,0 +1,25 @@
+.chart-series-line {
+    -fx-stroke-width: 1px;
+}
+.chart-plot-background {
+    -fx-background-color: #222222;
+}
+.chart-series-line {
+    -fx-stroke: #89c5fa;
+}
+.chart-vertical-grid-lines {
+    -fx-stroke: #333333;
+}
+.chart-horizontal-grid-lines {
+    -fx-stroke: #333333;
+}
+.chart {
+    -fx-padding: 20px;
+    -fx-background-color: #222222;
+}
+
+/*#line-chart .chart-series-line {*/
+/*    -fx-stroke-width: 1px;*/
+/*    -fx-fill-width: 1px;*/
+/*    -fx-fill: #333333;*/
+/*}*/
