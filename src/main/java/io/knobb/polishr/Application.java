@@ -1,6 +1,5 @@
 package io.knobb.polishr;
 
-import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
@@ -11,7 +10,7 @@ import javafx.stage.Stage;
 
 import java.util.concurrent.atomic.AtomicReference;
 
-public class Polishr extends Application {
+public class Application extends javafx.application.Application {
 
     StackPane layout;
     Circle circle;

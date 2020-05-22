@@ -49,14 +49,21 @@ public class AudioProcessor extends Application {
         layout.getChildren().add(fftLineChart);
         layout.getChildren().add(outputLineChart);
 
-        double[] sineWaveTimeSeries = generateSineWave(1024);
+        // double[] timeSeriesAudioData = generateSineWave(1024);
 
-        inputLineChart.getData().add(convertToSeries(sineWaveTimeSeries));
-        Complex[] fftFrequencySpectrum = createFFTSpectrum(sineWaveTimeSeries);
-        double[] fftFrequencySpectrumAbs = extractAbsoluteValue(fftFrequencySpectrum);
-        fftLineChart.getData().add(convertToSeries(fftFrequencySpectrumAbs));
-        double [] fftInverseOutput = inverseFFT(fftFrequencySpectrum);
-        outputLineChart.getData().add(convertToSeries(fftInverseOutput));
+        System.out.println("Extracting time series data from wav file...");
+        double[] timeSeriesAudioData = AudioExtractor.getTimeSeriesFromWavFile("C:\\Users\\jeffr\\Downloads\\dancing_through_sunday.wav");
+
+        //double[] subSeries =  // Get sub list
+
+        System.out.println("Extracting time series complete");
+
+        inputLineChart.getData().add(convertToSeries(timeSeriesAudioData));
+//        Complex[] fftFrequencySpectrum = createFFTSpectrum(timeSeriesAudioData);
+//        double[] fftFrequencySpectrumAbs = extractAbsoluteValue(fftFrequencySpectrum);
+//        fftLineChart.getData().add(convertToSeries(fftFrequencySpectrumAbs));
+//        double [] fftInverseOutput = inverseFFT(fftFrequencySpectrum);
+//        outputLineChart.getData().add(convertToSeries(fftInverseOutput));
 
         Scene scene = new Scene(layout, 900, 600);
         scene.getStylesheets().add("file:fftStyle.css");

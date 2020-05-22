@@ -2,15 +2,11 @@ package io.knobb.polishr;
 
 import java.io.File;
 
-public class AudioPlayer {
+public class AudioExtractor {
 
-    public static void main(String[] args)
-    {
-        AudioPlayer.playSound();
-    }
-
-    public static void playSound() {
-        File file = new File("C:\\Users\\jeffr\\Downloads\\dancing_through_sunday.wav");
+    public static double[] getTimeSeriesFromWavFile(String pathToFile) {
+        // File file = new File("C:\\Users\\jeffr\\Downloads\\dancing_through_sunday.wav");
+        File file = new File(pathToFile);
         try {
             WavFile wav = new WavFile(file);
             double[] audioData = new double[(int)wav.getFramesCount()];
@@ -25,12 +21,11 @@ public class AudioPlayer {
                 }
                 audioData[i] = amplitudeVal;
             }
+            return audioData;
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
             System.out.println("DONE");
         }
-
-
     }
 }
