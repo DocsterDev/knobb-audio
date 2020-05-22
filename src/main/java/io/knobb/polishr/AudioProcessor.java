@@ -24,37 +24,48 @@ public class AudioProcessor extends Application {
     @Override
     public void start(Stage window) {
         final VBox layout = new VBox();
-        NumberAxis xAxis1 = new NumberAxis();
-        NumberAxis xAxis2 = new NumberAxis();
-        xAxis1.setAutoRanging(true);
-        xAxis2.setAutoRanging(true);
-        final LineChart<Number,Number> timeData = new LineChart<>(xAxis1, new NumberAxis());
-        final LineChart<Number,Number> fftData = new LineChart<>(xAxis2, new NumberAxis());
+        NumberAxis axisX = new NumberAxis();
+        axisX.setAutoRanging(true);
+        final LineChart<Number,Number> inputLineChart = new LineChart<>(axisX, new NumberAxis());
+        final LineChart<Number,Number> fftLineChart = new LineChart<>(new NumberAxis(), new NumberAxis());
+        final LineChart<Number,Number> outputLineChart = new LineChart<>(axisX, new NumberAxis());
 
-        timeData.setTitle("Time Data");
-        timeData.setCreateSymbols(false);
-        timeData.setLegendVisible(false);
-        timeData.setId("line-chart");
-        fftData.setTitle("Fourier Transform");
-        fftData.setCreateSymbols(false);
-        fftData.setLegendVisible(false);
+        inputLineChart.setTitle("Input Signal");
+        inputLineChart.setId("line-chart-input-signal");
+        inputLineChart.setCreateSymbols(false);
+        inputLineChart.setLegendVisible(false);
 
-        layout.getChildren().add(timeData);
-        layout.getChildren().add(fftData);
+        fftLineChart.setTitle("Frequency Spectrum");
+        fftLineChart.setId("line-chart-fft");
+        fftLineChart.setCreateSymbols(false);
+        fftLineChart.setLegendVisible(false);
 
-        double[] waveData = generateWaveData(1024);
+        outputLineChart.setTitle("Output Signal");
+        outputLineChart.setId("line-chart-output-signal");
+        outputLineChart.setCreateSymbols(false);
+        outputLineChart.setLegendVisible(false);
 
-        timeData.getData().add(convertToLineData(waveData));
-        fftData.getData().add(createFFTSpectrum(waveData));
+        layout.getChildren().add(inputLineChart);
+        layout.getChildren().add(fftLineChart);
+        layout.getChildren().add(outputLineChart);
+
+        double[] sineWaveTimeSeries = generateSineWave(1024);
+
+        inputLineChart.getData().add(convertToSeries(sineWaveTimeSeries));
+        Complex[] fftFrequencySpectrum = createFFTSpectrum(sineWaveTimeSeries);
+        double[] fftFrequencySpectrumAbs = extractAbsoluteValue(fftFrequencySpectrum);
+        fftLineChart.getData().add(convertToSeries(fftFrequencySpectrumAbs));
+        double [] fftInverseOutput = inverseFFT(fftFrequencySpectrum);
+        outputLineChart.getData().add(convertToSeries(fftInverseOutput));
 
         Scene scene = new Scene(layout, 900, 600);
         scene.getStylesheets().add("file:fftStyle.css");
         window.setScene(scene);
-        window.setTitle("Fast Fourier Transform");
+        window.setTitle("KNOBB - Fast Fourier Transform Example");
         window.show();
     }
 
-    private double[] generateWaveData(int fftSize) {
+    private double[] generateSineWave(int fftSize) {
         double[] data = new double[fftSize];
         double radians;
         double frequencyFactor = 16;
@@ -69,7 +80,7 @@ public class AudioProcessor extends Application {
         return data;
     }
 
-    private XYChart.Series convertToLineData(double[] data) {
+    private XYChart.Series convertToSeries(double[] data) {
         XYChart.Series series = new XYChart.Series();
         for (int i=0;i<data.length;i++) {
             series.getData().add(new XYChart.Data( i, data[i]));
@@ -77,25 +88,37 @@ public class AudioProcessor extends Application {
         return series;
     }
 
-    private XYChart.Series createFFTSpectrum(double[] data) {
-        Complex[] frequencyData = transformer.transform(data, TransformType.FORWARD);
+    private void equalize(Complex[] input) {
+        for (int i=0;i<input.length;i++) {
+           input[i] = new Complex(0);
+        }
+        int base = 400;
+        Complex eq1 = input[base - 2];
+        Complex eq2 = input[base - 1];
+        Complex eq3 = input[base];
+        Complex eq4 = input[base + 1];
+        Complex eq5 = input[base + 2];
 
-        Complex eq1 = frequencyData[500];
-        Complex eq2 = frequencyData[501];
-        Complex eq3 = frequencyData[502];
-
-        frequencyData[500] = eq1.add(50);
-        frequencyData[501] = eq2.add(100);
-        frequencyData[502] = eq3.add(50);
-
-        Complex[] testInverse = transformer.transform(frequencyData, TransformType.INVERSE);
-
-        double[] fftData = buildFFTPlot(testInverse);
-
-        return convertToLineData(fftData);
+        input[base - 2] = eq1.add(25);
+        input[base - 1] = eq2.add(50);
+        input[base] = eq3.add(100);
+        input[base + 1] = eq4.add(50);
+        input[base + 2] = eq5.add(25);
     }
 
-    private double[] buildFFTPlot(Complex[] fftData) {
+    private Complex[] createFFTSpectrum(double[] timeSeriesData) {
+        Complex[] fftInput = transformer.transform(timeSeriesData, TransformType.FORWARD);
+        // Meat and potatoes
+        // equalize(fftInput);
+        return fftInput;
+    }
+
+    private double[] inverseFFT (Complex[] fftInput) {
+        Complex[] fftInverseOutput = transformer.transform(fftInput, TransformType.INVERSE);
+        return extractAbsoluteValue(fftInverseOutput);
+    }
+
+    private double[] extractAbsoluteValue(Complex[] fftData) {
         double[] fftOut = new double[fftData.length];
         for (int i=0;i<fftData.length;i++) {
             fftOut[i] = fftData[i].abs();
