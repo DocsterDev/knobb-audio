@@ -6,28 +6,38 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Polygon?>
+<?import javafx.scene.shape.Rectangle?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.knobb.polishr.contoller.MainController">
    <center>
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <HBox alignment="CENTER" prefHeight="230.0" prefWidth="600.0">
+            <HBox alignment="CENTER" prefHeight="409.0" prefWidth="600.0">
                <children>
-                  <Circle fx:id="visualizerLow" fill="#57baff" radius="60.0" stroke="TRANSPARENT" strokeType="INSIDE" />
-                  <Circle fx:id="visualizerMid" fill="#57baff" radius="60.0" stroke="TRANSPARENT" strokeType="INSIDE" />
-                  <Circle fx:id="visualizerHigh" fill="#57baff" radius="60.0" stroke="TRANSPARENT" strokeType="INSIDE" />
+                  <Rectangle fx:id="bar0" fill="#7ae2ff" height="200.0" smooth="false" strokeType="INSIDE" width="10.0" />
+                  <Rectangle fx:id="bar1" fill="#4bd8ff" height="200.0" layoutX="125.0" layoutY="10.0" smooth="false" strokeType="INSIDE" width="10.0" />
+                  <Rectangle fx:id="bar2" fill="#1bd1ff" height="200.0" layoutX="130.0" layoutY="10.0" smooth="false" strokeType="INSIDE" width="10.0" />
+                  <Rectangle fx:id="bar3" fill="#2eccf4" height="200.0" layoutX="135.0" layoutY="10.0" smooth="false" strokeType="INSIDE" width="10.0" />
+                  <Rectangle fx:id="bar4" fill="#4bd8ff" height="200.0" layoutX="140.0" layoutY="10.0" smooth="false" strokeType="INSIDE" width="10.0" />
+<!--                  <Circle fx:id="visualizerLow" fill="#57baff" radius="60.0" stroke="TRANSPARENT" strokeType="INSIDE" />-->
+<!--                  <Circle fx:id="visualizerMid" fill="#57baff" radius="60.0" stroke="TRANSPARENT" strokeType="INSIDE" />-->
+<!--                  <Circle fx:id="visualizerHigh" fill="#57baff" radius="60.0" stroke="TRANSPARENT" strokeType="INSIDE" />-->
                </children>
             </HBox>
-            <HBox alignment="CENTER" prefHeight="284.0" prefWidth="600.0">
+<!--                  <AreaChart fx:id="areaChart">-->
+<!--                    <xAxis>-->
+<!--                      <NumberAxis fx:id="xAxis" side="BOTTOM" />-->
+<!--                    </xAxis>-->
+<!--                    <yAxis>-->
+<!--                      <NumberAxis fx:id="yAxis" side="LEFT" />-->
+<!--                    </yAxis>-->
+<!--                  </AreaChart>-->
+            <StackPane fx:id="playButton" onMouseClicked="#handleButtonClick" prefHeight="140.0" prefWidth="103.0">
                <children>
-                  <StackPane fx:id="playButton" onMouseClicked="#handleButtonClick" prefHeight="150.0" prefWidth="200.0">
-                     <children>
-                        <Circle fill="#47edff" radius="59.0" stroke="#ffffff00" strokeType="INSIDE" />
-                        <Polygon fill="#52abff" points="-15.333292007446289, 15.666682243347168, 8.333353996276855, -13.333317756652832, -14.999979019165039, -42.33332824707031" stroke="TRANSPARENT" strokeType="INSIDE" />
-                     </children>
-                  </StackPane>
+                  <Circle fill="#3c3c3c" radius="26.0" stroke="#ffffff00" strokeType="INSIDE" />
+                  <Polygon fill="#52abff" points="17.533370971679688, -27.53040885925293, 8.333353996276855, -13.333317756652832, -5.733285903930664, -22.333492279052734" stroke="TRANSPARENT" strokeType="INSIDE" />
                </children>
-            </HBox>
+            </StackPane>
          </children>
       </VBox>
    </center>

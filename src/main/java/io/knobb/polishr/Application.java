@@ -1,9 +1,17 @@
 package io.knobb.polishr;
 
+import io.knobb.polishr.io.MP3DecoderModded;
+import io.knobb.polishr.player.AudioPlayer;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.apache.commons.math3.complex.Complex;
+import org.apache.commons.math3.transform.DftNormalization;
+import org.apache.commons.math3.transform.FastFourierTransformer;
+import org.apache.commons.math3.transform.TransformType;
+
+import java.io.FileInputStream;
 
 public class Application extends javafx.application.Application {
 
