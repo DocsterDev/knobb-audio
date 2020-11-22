@@ -76,7 +76,7 @@ public class MainController implements Initializable {
         try {
             //WaveDecoder waveDecoder = new WaveDecoder(new FileInputStream("C:/Users/jeffr/Documents/Code/audio-poc/src/main/resources/stay.wav"));
             //MP3DecoderModded mp3Decoder = new MP3DecoderModded(new FileInputStream("C:/Users/jeffr/Documents/Code/audio-poc/src/main/resources/song1.mp3"));
-            MP3DecoderModded mp3Decoder = new MP3DecoderModded(new URL("http://localhost:8084/stream/videos/2Lb2BiUC898").openStream());
+            MP3DecoderModded mp3Decoder = new MP3DecoderModded(new URL("http://localhost:8084/stream/videos/6pIyg35wiB4").openStream());
             // 2D Sample array for each stereo channel
             float[][] samples = new float[1024][2];
             FastFourierTransformer fft = new FastFourierTransformer(DftNormalization.STANDARD);
