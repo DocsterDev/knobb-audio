@@ -12,26 +12,30 @@
    <center>
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <HBox alignment="CENTER" prefHeight="409.0" prefWidth="600.0">
+            <HBox fx:id="visualizer" alignment="CENTER" prefHeight="409.0" prefWidth="600.0">
                <children>
-                  <Rectangle fx:id="bar0" fill="#7ae2ff" height="200.0" smooth="false" strokeType="INSIDE" width="10.0" />
-                  <Rectangle fx:id="bar1" fill="#4bd8ff" height="200.0" layoutX="125.0" layoutY="10.0" smooth="false" strokeType="INSIDE" width="10.0" />
-                  <Rectangle fx:id="bar2" fill="#1bd1ff" height="200.0" layoutX="130.0" layoutY="10.0" smooth="false" strokeType="INSIDE" width="10.0" />
-                  <Rectangle fx:id="bar3" fill="#2eccf4" height="200.0" layoutX="135.0" layoutY="10.0" smooth="false" strokeType="INSIDE" width="10.0" />
-                  <Rectangle fx:id="bar4" fill="#4bd8ff" height="200.0" layoutX="140.0" layoutY="10.0" smooth="false" strokeType="INSIDE" width="10.0" />
-<!--                  <Circle fx:id="visualizerLow" fill="#57baff" radius="60.0" stroke="TRANSPARENT" strokeType="INSIDE" />-->
-<!--                  <Circle fx:id="visualizerMid" fill="#57baff" radius="60.0" stroke="TRANSPARENT" strokeType="INSIDE" />-->
-<!--                  <Circle fx:id="visualizerHigh" fill="#57baff" radius="60.0" stroke="TRANSPARENT" strokeType="INSIDE" />-->
+<!--                  <Rectangle fx:id="bar0" fill="#7ae2ff" height="200.0" smooth="false" strokeType="INSIDE" width="10.0" />-->
+<!--                  <Rectangle fx:id="bar1" fill="#4bd8ff" height="200.0" layoutX="125.0" layoutY="10.0" smooth="false" strokeType="INSIDE" width="10.0" />-->
+<!--                  <Rectangle fx:id="bar2" fill="#1bd1ff" height="200.0" layoutX="130.0" layoutY="10.0" smooth="false" strokeType="INSIDE" width="10.0" />-->
+<!--                  <Rectangle fx:id="bar3" fill="#2eccf4" height="200.0" layoutX="135.0" layoutY="10.0" smooth="false" strokeType="INSIDE" width="10.0" />-->
+<!--                  <Rectangle fx:id="bar4" fill="#4bd8ff" height="200.0" layoutX="140.0" layoutY="10.0" smooth="false" strokeType="INSIDE" width="10.0" />-->
+<!--                  <Rectangle fx:id="bar5" fill="#7ae2ff" height="200.0" smooth="false" strokeType="INSIDE" width="10.0" />-->
+<!--                  <Rectangle fx:id="bar6" fill="#4bd8ff" height="200.0" layoutX="125.0" layoutY="10.0" smooth="false" strokeType="INSIDE" width="10.0" />-->
+<!--                  <Rectangle fx:id="bar7" fill="#1bd1ff" height="200.0" layoutX="130.0" layoutY="10.0" smooth="false" strokeType="INSIDE" width="10.0" />-->
+<!--                  <Rectangle fx:id="bar8" fill="#2eccf4" height="200.0" layoutX="135.0" layoutY="10.0" smooth="false" strokeType="INSIDE" width="10.0" />-->
+<!--                  <Rectangle fx:id="bar9" fill="#4bd8ff" height="200.0" layoutX="140.0" layoutY="10.0" smooth="false" strokeType="INSIDE" width="10.0" />-->
+<!--                  <Rectangle fx:id="bar10" fill="#7ae2ff" height="200.0" smooth="false" strokeType="INSIDE" width="10.0" />-->
+<!--                  <Rectangle fx:id="bar11" fill="#4bd8ff" height="200.0" layoutX="125.0" layoutY="10.0" smooth="false" strokeType="INSIDE" width="10.0" />-->
+<!--                  <Rectangle fx:id="bar12" fill="#1bd1ff" height="200.0" layoutX="130.0" layoutY="10.0" smooth="false" strokeType="INSIDE" width="10.0" />-->
+<!--                  <Rectangle fx:id="bar13" fill="#2eccf4" height="200.0" layoutX="135.0" layoutY="10.0" smooth="false" strokeType="INSIDE" width="10.0" />-->
+<!--                  <Rectangle fx:id="bar14" fill="#4bd8ff" height="200.0" layoutX="140.0" layoutY="10.0" smooth="false" strokeType="INSIDE" width="10.0" />-->
+<!--                  <Rectangle fx:id="bar15" fill="#7ae2ff" height="200.0" smooth="false" strokeType="INSIDE" width="10.0" />-->
+<!--                  <Rectangle fx:id="bar16" fill="#4bd8ff" height="200.0" layoutX="125.0" layoutY="10.0" smooth="false" strokeType="INSIDE" width="10.0" />-->
+<!--                  <Rectangle fx:id="bar17" fill="#1bd1ff" height="200.0" layoutX="130.0" layoutY="10.0" smooth="false" strokeType="INSIDE" width="10.0" />-->
+<!--                  <Rectangle fx:id="bar18" fill="#2eccf4" height="200.0" layoutX="135.0" layoutY="10.0" smooth="false" strokeType="INSIDE" width="10.0" />-->
+<!--                  <Rectangle fx:id="bar19" fill="#4bd8ff" height="200.0" layoutX="140.0" layoutY="10.0" smooth="false" strokeType="INSIDE" width="10.0" />-->
                </children>
             </HBox>
-<!--                  <AreaChart fx:id="areaChart">-->
-<!--                    <xAxis>-->
-<!--                      <NumberAxis fx:id="xAxis" side="BOTTOM" />-->
-<!--                    </xAxis>-->
-<!--                    <yAxis>-->
-<!--                      <NumberAxis fx:id="yAxis" side="LEFT" />-->
-<!--                    </yAxis>-->
-<!--                  </AreaChart>-->
             <StackPane fx:id="playButton" onMouseClicked="#handleButtonClick" prefHeight="140.0" prefWidth="103.0">
                <children>
                   <Circle fill="#3c3c3c" radius="26.0" stroke="#ffffff00" strokeType="INSIDE" />
