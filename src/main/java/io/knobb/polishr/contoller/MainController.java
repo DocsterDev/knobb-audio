@@ -76,7 +76,7 @@ public class MainController implements Initializable {
         try {
             //WaveDecoder waveDecoder = new WaveDecoder(new FileInputStream("C:/Users/jeffr/Documents/Code/audio-poc/src/main/resources/stay.wav"));
             //MP3DecoderModded mp3Decoder = new MP3DecoderModded(new FileInputStream("C:/Users/jeffr/Documents/Code/audio-poc/src/main/resources/song1.mp3"));
-            MP3DecoderModded mp3Decoder = new MP3DecoderModded(new URL("http://localhost:8084/stream/videos/eLGiTV2oP10").openStream());
+            MP3DecoderModded mp3Decoder = new MP3DecoderModded(new URL("http://localhost:8084/stream/videos/bVTaJ9sKa_Y").openStream());
             // 2D Sample array for each stereo channel
             float[][] samples = new float[1024][2];
             FastFourierTransformer fft = new FastFourierTransformer(DftNormalization.STANDARD);
@@ -99,8 +99,7 @@ public class MainController implements Initializable {
                 for (Node rect: visualizer.getChildren()) {
                     val = 0;
                     for (int i = (index * increment); i < ((index + 1) * increment); i++) {
-                        //val += fft_left[i].abs() / (float)(numBars / (index + 1));
-                        val += fft_left[i].abs() * (4 * (float)(index + 1) * 0.125);
+                        val += fft_left[i].abs() * (4 * (float)(index + 1) * 0.03125);
                     }
                     val = val / increment;
                     rect.setScaleY(maFilter.get(index).addAndCalculate(val));
