@@ -47,7 +47,7 @@ public class MainController implements Initializable {
     }
 
     private void process() {
-        int numBars = 40;
+        int numBars = 60;
         List<String> colors = new ArrayList<>();
         colors.add("7ae2ff");
         colors.add("4bd8ff");
@@ -76,12 +76,12 @@ public class MainController implements Initializable {
         try {
             //WaveDecoder waveDecoder = new WaveDecoder(new FileInputStream("C:/Users/jeffr/Documents/Code/audio-poc/src/main/resources/stay.wav"));
             //MP3DecoderModded mp3Decoder = new MP3DecoderModded(new FileInputStream("C:/Users/jeffr/Documents/Code/audio-poc/src/main/resources/song1.mp3"));
-            MP3DecoderModded mp3Decoder = new MP3DecoderModded(new URL("http://localhost:8084/stream/videos/6pIyg35wiB4").openStream());
+            MP3DecoderModded mp3Decoder = new MP3DecoderModded(new URL("http://localhost:8084/stream/videos/eLGiTV2oP10").openStream());
             // 2D Sample array for each stereo channel
             float[][] samples = new float[1024][2];
             FastFourierTransformer fft = new FastFourierTransformer(DftNormalization.STANDARD);
 
-            int increment = 256 / numBars;
+            int increment = 100 / numBars;
             while (mp3Decoder.readSamples( samples ) > 0) {
 
                 double[] samples_left = new double[samples.length];
@@ -100,7 +100,7 @@ public class MainController implements Initializable {
                     val = 0;
                     for (int i = (index * increment); i < ((index + 1) * increment); i++) {
                         //val += fft_left[i].abs() / (float)(numBars / (index + 1));
-                        val += fft_left[i].abs() * 4;
+                        val += fft_left[i].abs() * (4 * (float)(index + 1) * 0.125);
                     }
                     val = val / increment;
                     rect.setScaleY(maFilter.get(index).addAndCalculate(val));

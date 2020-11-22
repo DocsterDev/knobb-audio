@@ -6,7 +6,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Polygon?>
-<?import javafx.scene.shape.Rectangle?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.knobb.polishr.contoller.MainController">
    <center>
@@ -38,8 +37,8 @@
             </HBox>
             <StackPane fx:id="playButton" onMouseClicked="#handleButtonClick" prefHeight="140.0" prefWidth="103.0">
                <children>
-                  <Circle fill="#3c3c3c" radius="26.0" stroke="#ffffff00" strokeType="INSIDE" />
-                  <Polygon fill="#52abff" points="17.533370971679688, -27.53040885925293, 8.333353996276855, -13.333317756652832, -5.733285903930664, -22.333492279052734" stroke="TRANSPARENT" strokeType="INSIDE" />
+                  <Circle fill="WHITE" radius="34.0" stroke="#97a3b800" strokeLineCap="ROUND" strokeType="OUTSIDE" strokeWidth="20.0" />
+                  <Polygon fill="#97a3b8" points="17.066743850708008, -19.13350486755371, 8.333353996276855, -13.333317756652832, 9.133347511291504, -31.933576583862305" stroke="TRANSPARENT" strokeType="INSIDE" />
                </children>
             </StackPane>
          </children>
